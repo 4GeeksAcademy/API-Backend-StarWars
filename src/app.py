@@ -38,6 +38,16 @@ def sitemap():
 
 @app.route('/user', methods=['GET'])
 def handle_hello():
+    user = User.query.all()
+    if user == []:
+        return jsonify({"msg": "No existen usuarios"}), 400
+    response_body = list(map(lambda x : x.serialize(), user))
+    return jsonify(response_body), 200
+
+
+@app.route('/user/<int:id>', methods=['GET'])
+def user_id(id):
+
 
     response_body = {
         "msg": "Hello, this is your GET /user response "
